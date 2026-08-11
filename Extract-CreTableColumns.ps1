@@ -121,9 +121,7 @@ if ($tableNames.Count -eq 0) { throw "Aucune table declaree dans $ConfigPath" }
 #  3. REGEX SQL (compilees une seule fois)
 # ============================================================================
 
-$rxOpt = [Text.RegularExpressions.RegexOptions]::IgnoreCase `
-    -bor [Text.RegularExpressions.RegexOptions]::Compiled `
-    -bor [Text.RegularExpressions.RegexOptions]::Singleline
+$rxOpt = [Text.RegularExpressions.RegexOptions]'IgnoreCase, Compiled, Singleline'
 
 # Mots reserves qui ne peuvent JAMAIS etre un alias de table
 $reserved = 'WHERE|ORDER|GROUP|HAVING|UNION|MINUS|INTERSECT|ON|AND|OR|NOT|LEFT|RIGHT|INNER|OUTER|FULL|CROSS|JOIN|SELECT|FROM|SET|VALUES|START|CONNECT|WITH|BY|PARTITION|USING|NATURAL|FOR|FETCH|OFFSET|LIMIT|AS|IN|EXISTS|CASE|WHEN|GROUPING'
@@ -135,11 +133,9 @@ $reWord = [regex]::new('[A-Za-z_][A-Za-z0-9_$#]*', $rxOpt)
 $reQual = [regex]::new('([A-Za-z_][A-Za-z0-9_$#]*)\s*\.\s*(\*|[A-Za-z_][A-Za-z0-9_$#]*)', $rxOpt)
 
 # c) tables declarees dans FROM / JOIN / UPDATE / INTO / ", " avec alias optionnel
-$reFrom = [regex]::new(
-    '(?:\bFROM\b|\bJOIN\b|\bUPDATE\b|\bINTO\b|,)\s*' +
-    '(?:(?<sch>[A-Za-z_][A-Za-z0-9_$#]*)\s*\.\s*)?' +
-    '(?<tbl>[A-Za-z_][A-Za-z0-9_$#]*)' +
-    '(?:\s+(?:AS\s+)?(?<ali>(?!(?:' + $reserved + ')\b)[A-Za-z_][A-Za-z0-9_$#]*))?', $rxOpt)
+$reFromTemplate = '(?:\bFROM\b|\bJOIN\b|\bUPDATE\b|\bINTO\b|,)\s*(?:(?<sch>[A-Za-z_][A-Za-z0-9_$#]*)\s*\.\s*)?(?<tbl>[A-Za-z_][A-Za-z0-9_$#]*)(?:\s+(?:AS\s+)?(?<ali>(?!(?:{0})\b)[A-Za-z_][A-Za-z0-9_$#]*))?'
+$reFromPattern  = $reFromTemplate -replace '\{0\}', $reserved
+$reFrom = [regex]::new($reFromPattern, $rxOpt)
 
 # Indexe une requete SQL : mots, references qualifiees, tables/alias du FROM
 function Get-SqlIndex {
@@ -200,13 +196,13 @@ try {
     $data = $ur.Value2                                   # lecture en bloc = 1 appel COM
     if ($data -isnot [System.Array]) { throw "Feuille '$SourceSheet' vide." }
 
-    $rLo = $data.GetLowerBound(0); $rHi = $data.GetUpperBound(0)
-    $cLo = $data.GetLowerBound(1); $cHi = $data.GetUpperBound(1)
+    $rLo = [int]$data.GetLowerBound(0); $rHi = [int]$data.GetUpperBound(0)
+    $cLo = [int]$data.GetLowerBound(1); $cHi = [int]$data.GetUpperBound(1)
 
     # --- reperage des colonnes par leur entete (1ere ligne de la plage utilisee) ---
     $colCre = 0; $colType = 0; $colStatus = 0; $colRequest = 0
     for ($c = $cLo; $c -le $cHi; $c++) {
-        switch (Get-NormalizedText $data[$rLo, $c]) {
+        switch (Get-NormalizedText $data.GetValue($rLo, $c)) {
             'cre'        { $colCre     = $c }
             'type_cre'   { $colType    = $c }
             'cre_status' { $colStatus  = $c }
@@ -225,17 +221,17 @@ try {
     # ============================================================================
     for ($r = $rLo + 1; $r -le $rHi; $r++) {
 
-        $creName = [string]$data[$r, $colCre]
+        $creName = [string]$data.GetValue($r, $colCre)
         if ([string]::IsNullOrWhiteSpace($creName)) { continue }
         $creName = $creName.Trim()
         $creTotal++
 
         # filtres TYPE_CRE / CRE_STATUS
-        if ($colType   -gt 0 -and (Get-NormalizedText $data[$r, $colType])   -ne $wantType)   { continue }
-        if ($colStatus -gt 0 -and (Get-NormalizedText $data[$r, $colStatus]) -ne $wantStatus) { continue }
+        if ($colType   -gt 0 -and (Get-NormalizedText $data.GetValue($r, $colType))   -ne $wantType)   { continue }
+        if ($colStatus -gt 0 -and (Get-NormalizedText $data.GetValue($r, $colStatus)) -ne $wantStatus) { continue }
         $creRetenus++
 
-        $sql = [string]$data[$r, $colRequest]
+        $sql = [string]$data.GetValue($r, $colRequest)
         $matched = $false
 
         if (-not [string]::IsNullOrWhiteSpace($sql)) {
@@ -313,17 +309,18 @@ try {
         $out.Name = $TargetSheet
 
         $n   = $results.Count
-        $arr = New-Object 'object[,]' ($n + 1), 3
-        $arr[0, 0] = 'CRE'; $arr[0, 1] = 'TABLE'; $arr[0, 2] = 'COLONNES'
+        $arr = [System.Array]::CreateInstance([object], ($n + 1), 3)
+        $arr.SetValue('CRE', 0, 0); $arr.SetValue('TABLE', 0, 1); $arr.SetValue('COLONNES', 0, 2)
 
         $prevCre = $null
         for ($i = 0; $i -lt $n; $i++) {
             $row = $results[$i]
-            if ($BlankRepeatedCre -and $row.CRE -eq $prevCre) { $arr[$i + 1, 0] = '' }
-            else { $arr[$i + 1, 0] = $row.CRE }
-            $prevCre       = $row.CRE
-            $arr[$i + 1, 1] = $row.TABLE
-            $arr[$i + 1, 2] = $row.COLONNES
+            $rowIdx = $i + 1
+            if ($BlankRepeatedCre -and $row.CRE -eq $prevCre) { $arr.SetValue('', $rowIdx, 0) }
+            else { $arr.SetValue($row.CRE, $rowIdx, 0) }
+            $prevCre = $row.CRE
+            $arr.SetValue($row.TABLE, $rowIdx, 1)
+            $arr.SetValue($row.COLONNES, $rowIdx, 2)
         }
 
         # ecriture en bloc = 1 appel COM
@@ -348,8 +345,20 @@ try {
     }
 
     $sw.Stop()
-    Write-Host ("CRE lus : {0} | retenus ({1}/{2}) : {3} | lignes generees : {4} | duree : {5:N1}s" -f `
-        $creTotal, $TypeCre, $Status, $creRetenus, $results.Count, $sw.Elapsed.TotalSeconds)
+    Write-Host ("CRE lus : {0} | retenus ({1}/{2}) : {3} | lignes generees : {4} | duree : {5:N1}s" -f $creTotal, $TypeCre, $Status, $creRetenus, $results.Count, $sw.Elapsed.TotalSeconds)
+}
+catch {
+    Write-Host ""
+    Write-Host "========================= ERREUR =========================" -ForegroundColor Red
+    Write-Host ("Message     : {0}" -f $_.Exception.Message)              -ForegroundColor Red
+    Write-Host ("Ligne script: {0}" -f $_.InvocationInfo.ScriptLineNumber) -ForegroundColor Red
+    Write-Host ("Colonne     : {0}" -f $_.InvocationInfo.OffsetInLine)     -ForegroundColor Red
+    Write-Host ("Instruction : {0}" -f $_.InvocationInfo.Line.Trim())     -ForegroundColor Red
+    Write-Host ("Type .NET   : {0}" -f $_.Exception.GetType().FullName)   -ForegroundColor Red
+    Write-Host "--- Pile d'appel ---" -ForegroundColor Red
+    Write-Host $_.ScriptStackTrace -ForegroundColor Red
+    Write-Host "============================================================" -ForegroundColor Red
+    throw
 }
 finally {
     # ---- liberation COM systematique ----
