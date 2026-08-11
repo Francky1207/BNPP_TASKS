@@ -380,8 +380,9 @@ try {
         $auditRows.Add(@('CRE retenus apres filtre', $creRetenus, ("TYPE_CRE={0} / CRE_STATUS={1}" -f $TypeCre, $Status)))
         $auditRows.Add(@('  dont REQUEST vide/nulle', $sqlVideCount, 'non analysable -> a verifier manuellement'))
         $auditRows.Add(@('  dont au moins 1 table detectee', ($creRetenus - $creSansTable), ''))
-        $auditRows.Add(@('  dont aucune table detectee', $creSansTable, $(if ($KeepEmptyCre) { 'inclus en ligne vide dans ' + $TargetSheet } else { 'absent de ' + $TargetSheet + ' (relancer avec -KeepEmptyCre pour les voir)' })))
-        $auditRows.Add(@('Lignes generees dans ' + $TargetSheet, $results.Count, ''))
+        $detailSansTable = if ($KeepEmptyCre) { ("inclus en ligne vide dans {0}" -f $TargetSheet) } else { ("absent de {0} (relancer avec -KeepEmptyCre pour les voir)" -f $TargetSheet) }
+        $auditRows.Add(@('  dont aucune table detectee', $creSansTable, $detailSansTable))
+        $auditRows.Add(@(("Lignes generees dans {0}" -f $TargetSheet), $results.Count, ''))
         $auditRows.Add(@('', '', ''))
         $auditRows.Add(@('=== DETECTIONS PAR TABLE (nb de CRE ou la table apparait) ===', '', ''))
         foreach ($t in $tableNames) {
@@ -394,16 +395,18 @@ try {
             foreach ($c in $emptySqlSamples) { $auditRows.Add(@($c, '', '')) }
         }
 
+        # ecriture cellule par cellule (feuille de quelques dizaines de lignes -> cout negligeable,
+        # et on evite ainsi tout risque de marshaling COM lie a une ecriture en bloc d'un tableau 2D)
+        $aud.Cells.Item(1, 1).Value2 = 'CONTROLE'
+        $aud.Cells.Item(1, 2).Value2 = 'VALEUR'
+        $aud.Cells.Item(1, 3).Value2 = 'DETAIL'
         $an = $auditRows.Count
-        $aArr = [System.Array]::CreateInstance([object], ($an + 1), 3)
-        $aArr.SetValue('CONTROLE', 0, 0); $aArr.SetValue('VALEUR', 0, 1); $aArr.SetValue('DETAIL', 0, 2)
         for ($i = 0; $i -lt $an; $i++) {
-            $aArr.SetValue($auditRows[$i][0], $i + 1, 0)
-            $aArr.SetValue($auditRows[$i][1], $i + 1, 1)
-            $aArr.SetValue($auditRows[$i][2], $i + 1, 2)
+            $excelRowW = $i + 2   # +1 entete, +1 index 1-based Excel
+            $aud.Cells.Item($excelRowW, 1).Value2 = $auditRows[$i][0]
+            $aud.Cells.Item($excelRowW, 2).Value2 = $auditRows[$i][1]
+            $aud.Cells.Item($excelRowW, 3).Value2 = $auditRows[$i][2]
         }
-        $aRng = $aud.Range($aud.Cells.Item(1, 1), $aud.Cells.Item($an + 1, 3))
-        $aRng.Value2 = $aArr
 
         $aHdr = $aud.Range('A1:C1')
         $aHdr.Font.Bold = $true
