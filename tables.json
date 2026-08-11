@@ -1,0 +1,20 @@
+{
+  "kpa_parties": [
+    "PARTY_ID",
+    "LEGAL_FORM",
+    "ANNUAL_REVENUE",
+    "PRIMARY_ACTIVITY_CODE",
+    "PRIMARY_ACTIVITY_TEXT"
+  ],
+  "kbr_elt_networks": [
+    "CONTACT_EMAIL",
+    "CONTACT_PHONE",
+    "BANK_ACCOUNT",
+    "ORIAS_NUMBER",
+    "PREFECTORAL_HABILITATION"
+  ],
+  "kbo_cre_pilots": [
+    "RECORD_ID",
+    "PROCESS_FEEDBACK_ID"
+  ]
+}
