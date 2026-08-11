@@ -104,7 +104,25 @@ if (-not (Test-Path -LiteralPath $ConfigPath)) {
     throw "Fichier de configuration introuvable : $ConfigPath"
 }
 
-$json = Get-Content -LiteralPath $ConfigPath -Raw -Encoding UTF8 | ConvertFrom-Json
+$ConfigPath = (Resolve-Path -LiteralPath $ConfigPath).Path
+$fileInfo   = Get-Item -LiteralPath $ConfigPath
+if ($fileInfo.Length -eq 0) {
+    throw ("Le fichier de configuration est VIDE (0 octet) : {0}. Verifiez qu'il a bien ete transfere/pull depuis GitHub avec son contenu." -f $ConfigPath)
+}
+
+# ReadAllText detecte et retire automatiquement le BOM eventuel (contrairement a Get-Content -Encoding UTF8
+# dans certaines versions), source frequente d'erreur "Primitive JSON non valide" avec un fichier pourtant non vide.
+$rawJson = [System.IO.File]::ReadAllText($ConfigPath)
+if ([string]::IsNullOrWhiteSpace($rawJson)) {
+    throw ("Le fichier de configuration ne contient que des espaces/rien d'exploitable : {0}" -f $ConfigPath)
+}
+
+try {
+    $json = $rawJson | ConvertFrom-Json
+}
+catch {
+    throw ("JSON invalide dans {0} : {1} (verifiez accolades, virgules, guillemets doubles avec un validateur JSON)" -f $ConfigPath, $_.Exception.Message)
+}
 
 # Ordre de declaration conserve -> ordre des lignes en sortie
 $tableNames = New-Object 'System.Collections.Generic.List[string]'
@@ -177,7 +195,11 @@ function Get-SqlIndex {
 
 $excel = $null; $wb = $null
 $results = New-Object 'System.Collections.Generic.List[object]'
-$creTotal = 0; $creRetenus = 0
+$creTotal = 0; $creRetenus = 0; $creSansTable = 0; $sqlVideCount = 0
+$emptySqlSamples = New-Object 'System.Collections.Generic.List[string]'
+# tableHitCounts[t] = nombre de CRE retenus dans lesquels la table t a ete detectee au moins une fois
+$tableHitCounts = New-Object 'System.Collections.Generic.Dictionary[string,int]' ([StringComparer]::OrdinalIgnoreCase)
+foreach ($t0 in $tableNames) { $tableHitCounts[$t0] = 0 }
 
 try {
     $excel = New-Object -ComObject Excel.Application
@@ -234,7 +256,11 @@ try {
         $sql = [string]$data.GetValue($r, $colRequest)
         $matched = $false
 
-        if (-not [string]::IsNullOrWhiteSpace($sql)) {
+        if ([string]::IsNullOrWhiteSpace($sql)) {
+            $sqlVideCount++
+            if ($emptySqlSamples.Count -lt 10) { $emptySqlSamples.Add($creName) }
+        }
+        else {
             $idx = Get-SqlIndex -Sql $sql
 
             foreach ($t in $tableNames) {
@@ -276,6 +302,7 @@ try {
 
                 if ($RequireColumn -and $found.Count -eq 0) { continue }
                 $matched = $true
+                $tableHitCounts[$t]++
 
                 if ($OneRowPerColumn -and $found.Count -gt 0) {
                     foreach ($col in $found) {
@@ -291,9 +318,12 @@ try {
             }
         }
 
-        # CRE sans aucune table ciblee -> ligne vide si demande
-        if (-not $matched -and $KeepEmptyCre) {
-            $results.Add([pscustomobject]@{ CRE = $creName; TABLE = ''; COLONNES = '' })
+        # CRE sans aucune table ciblee -> comptabilise toujours, ligne vide seulement si demande
+        if (-not $matched) {
+            $creSansTable++
+            if ($KeepEmptyCre) {
+                $results.Add([pscustomobject]@{ CRE = $creName; TABLE = ''; COLONNES = '' })
+            }
         }
     }
 
@@ -335,8 +365,69 @@ try {
         $out.Columns.Item(2).ColumnWidth = 28
         $out.Columns.Item(3).ColumnWidth = 70
 
+        # ============================================================================
+        #  6bis. FEUILLE DE CONTROLE / AUDIT (verification de la completude et fiabilite)
+        # ============================================================================
+        $auditSheetName = 'AUDIT_CRE'
+        foreach ($s in $wb.Worksheets) { if ($s.Name -eq $auditSheetName) { $s.Delete(); break } }
+        $aud = $wb.Worksheets.Add([Type]::Missing, $wb.Worksheets.Item($wb.Worksheets.Count))
+        $aud.Name = $auditSheetName
+
+        # construction des lignes : chaque ligne = (colonne1, colonne2, colonne3)
+        $auditRows = New-Object 'System.Collections.Generic.List[object[]]'
+        $auditRows.Add(@('=== SYNTHESE ===', '', ''))
+        $auditRows.Add(@('CRE total lus (feuille source)', $creTotal, ''))
+        $auditRows.Add(@('CRE retenus apres filtre', $creRetenus, ("TYPE_CRE={0} / CRE_STATUS={1}" -f $TypeCre, $Status)))
+        $auditRows.Add(@('  dont REQUEST vide/nulle', $sqlVideCount, 'non analysable -> a verifier manuellement'))
+        $auditRows.Add(@('  dont au moins 1 table detectee', ($creRetenus - $creSansTable), ''))
+        $auditRows.Add(@('  dont aucune table detectee', $creSansTable, $(if ($KeepEmptyCre) { 'inclus en ligne vide dans ' + $TargetSheet } else { 'absent de ' + $TargetSheet + ' (relancer avec -KeepEmptyCre pour les voir)' })))
+        $auditRows.Add(@('Lignes generees dans ' + $TargetSheet, $results.Count, ''))
+        $auditRows.Add(@('', '', ''))
+        $auditRows.Add(@('=== DETECTIONS PAR TABLE (nb de CRE ou la table apparait) ===', '', ''))
+        foreach ($t in $tableNames) {
+            $alerte = if ($tableHitCounts[$t] -eq 0) { 'JAMAIS DETECTEE -> verifier nom exact / alias dans tables.json' } else { '' }
+            $auditRows.Add(@($t, $tableHitCounts[$t], $alerte))
+        }
+        if ($emptySqlSamples.Count -gt 0) {
+            $auditRows.Add(@('', '', ''))
+            $auditRows.Add(@('=== ECHANTILLON CRE AVEC REQUEST VIDE (max 10, a verifier a la main) ===', '', ''))
+            foreach ($c in $emptySqlSamples) { $auditRows.Add(@($c, '', '')) }
+        }
+
+        $an = $auditRows.Count
+        $aArr = [System.Array]::CreateInstance([object], ($an + 1), 3)
+        $aArr.SetValue('CONTROLE', 0, 0); $aArr.SetValue('VALEUR', 0, 1); $aArr.SetValue('DETAIL', 0, 2)
+        for ($i = 0; $i -lt $an; $i++) {
+            $aArr.SetValue($auditRows[$i][0], $i + 1, 0)
+            $aArr.SetValue($auditRows[$i][1], $i + 1, 1)
+            $aArr.SetValue($auditRows[$i][2], $i + 1, 2)
+        }
+        $aRng = $aud.Range($aud.Cells.Item(1, 1), $aud.Cells.Item($an + 1, 3))
+        $aRng.Value2 = $aArr
+
+        $aHdr = $aud.Range('A1:C1')
+        $aHdr.Font.Bold = $true
+        $aHdr.Interior.Color = 65535
+        $aud.Columns.Item(1).ColumnWidth = 60
+        $aud.Columns.Item(2).ColumnWidth = 14
+        $aud.Columns.Item(3).ColumnWidth = 55
+
+        # mise en evidence rouge des lignes "table jamais detectee" et des titres de section
+        for ($i = 0; $i -lt $an; $i++) {
+            $c0 = [string]$auditRows[$i][0]
+            $c2 = [string]$auditRows[$i][2]
+            $excelRow = $i + 2   # +1 pour l'entete, +1 pour l'index 1-based Excel
+            if ($c0.StartsWith('===')) {
+                $aud.Range($aud.Cells.Item($excelRow, 1), $aud.Cells.Item($excelRow, 3)).Font.Bold = $true
+            }
+            elseif ($c2 -like 'JAMAIS DETECTEE*') {
+                $aud.Range($aud.Cells.Item($excelRow, 1), $aud.Cells.Item($excelRow, 3)).Font.Color = 255   # rouge
+            }
+        }
+
+
         $wb.Save()
-        Write-Host "Feuille '$TargetSheet' ecrite dans $ExcelPath" -ForegroundColor Green
+        Write-Host "Feuilles '$TargetSheet' et '$auditSheetName' ecrites dans $ExcelPath" -ForegroundColor Green
     }
 
     if ($CsvPath) {
