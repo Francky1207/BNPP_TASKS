@@ -1,0 +1,205 @@
+﻿CODE_CLIENT;RAISON_SOCIALE;VILLE;REGION;MONTANT;DATE_CREATION;STATUT
+CLI0001;Societe Generale du Batiment 1;Lyon;Auvergne-Rhone-Alpes;137,45;2026-02-11;Valide
+CLI0002;Cabinet Andre & Fils 2;Marseille;PACA;274,90;2026-03-12;Valide
+CLI0003;Enterprise Cotiere 3;Bordeaux;Nouvelle-Aquitaine;412,35;2026-04-13;Valide
+CLI0004;Groupe Herisson 4;Lille;Hauts-de-France;549,80;2026-05-14;Valide
+CLI0005;Maison Provencale 5;Nantes;Pays de la Loire;687,25;2026-06-15;Valide
+CLI0006;Etablissements Muller 6;Paris;Ile-de-France;824,70;2026-07-16;Valide
+CLI0007;Societe Generale du Batiment 7;Lyon;Auvergne-Rhone-Alpes;962,15;2026-08-17;Valide
+CLI0008;Cabinet Andre & Fils 8;Marseille;PACA;1 099,60;2026-09-18;Valide
+CLI0009;Enterprise Cotiere 9;Bordeaux;Nouvelle-Aquitaine;1 237,05;2026-01-10;Valide
+CLI0010;Groupe Herisson 10;Lille;Hauts-de-France;1 374,50;2026-02-11;Valide
+CLI0011;Maison Provencale 11;Nantes;Pays de la Loire;1 511,95;2026-03-12;Invalide
+CLI0012;Etablissements Muller 12;Paris;Ile-de-France;1 649,40;2026-04-13;Valide
+CLI0013;Societe Generale du Batiment 13;Lyon;Auvergne-Rhone-Alpes;1 786,85;2026-05-14;Valide
+CLI0014;Cabinet Andre & Fils 14;Marseille;PACA;1 924,30;2026-06-15;Valide
+CLI0015;Enterprise Cotiere 15;Bordeaux;Nouvelle-Aquitaine;2 061,75;2026-07-16;Valide
+CLI0016;Groupe Herisson 16;Lille;Hauts-de-France;2 199,20;2026-08-17;Valide
+CLI0017;Maison Provencale 17;Nantes;Pays de la Loire;2 336,65;2026-09-18;Valide
+CLI0018;Etablissements Muller 18;Paris;Ile-de-France;2 474,10;2026-01-10;Valide
+CLI0019;Societe Generale du Batiment 19;Lyon;Auvergne-Rhone-Alpes;2 611,55;2026-02-11;Valide
+CLI0020;Cabinet Andre & Fils 20;Marseille;PACA;2 749,00;2026-03-12;Valide
+CLI0021;Enterprise Cotiere 21;Bordeaux;Nouvelle-Aquitaine;2 886,45;2026-04-13;Valide
+CLI0022;Groupe Herisson 22;Lille;Hauts-de-France;3 023,90;2026-05-14;Invalide
+CLI0023;Maison Provencale 23;Nantes;Pays de la Loire;3 161,35;2026-06-15;Valide
+CLI0024;Etablissements Muller 24;Paris;Ile-de-France;3 298,80;2026-07-16;Valide
+CLI0025;Societe Generale du Batiment 25;Lyon;Auvergne-Rhone-Alpes;3 436,25;2026-08-17;Valide
+CLI0026;Cabinet Andre & Fils 26;Marseille;PACA;3 573,70;2026-09-18;Valide
+CLI0027;Enterprise Cotiere 27;Bordeaux;Nouvelle-Aquitaine;3 711,15;2026-01-10;Valide
+CLI0028;Groupe Herisson 28;Lille;Hauts-de-France;3 848,60;2026-02-11;Valide
+CLI0029;Maison Provencale 29;Nantes;Pays de la Loire;3 986,05;2026-03-12;Valide
+CLI0030;Etablissements Muller 30;Paris;Ile-de-France;4 123,50;2026-04-13;Valide
+CLI0031;Societe Generale du Batiment 31;Lyon;Auvergne-Rhone-Alpes;4 260,95;2026-05-14;Valide
+CLI0032;Cabinet Andre & Fils 32;Marseille;PACA;4 398,40;2026-06-15;Valide
+CLI0033;Enterprise Cotiere 33;Bordeaux;Nouvelle-Aquitaine;4 535,85;2026-07-16;Invalide
+CLI0034;Groupe Herisson 34;Lille;Hauts-de-France;4 673,30;2026-08-17;Valide
+CLI0035;Maison Provencale 35;Nantes;Pays de la Loire;4 810,75;2026-09-18;Valide
+CLI0036;Etablissements Muller 36;Paris;Ile-de-France;4 948,20;2026-01-10;Valide
+CLI0037;Societe Generale du Batiment 37;Lyon;Auvergne-Rhone-Alpes;5 085,65;2026-02-11;Valide
+CLI0038;Cabinet Andre & Fils 38;Marseille;PACA;5 223,10;2026-03-12;Valide
+CLI0039;Enterprise Cotiere 39;Bordeaux;Nouvelle-Aquitaine;5 360,55;2026-04-13;Valide
+CLI0040;Groupe Herisson 40;Lille;Hauts-de-France;5 498,00;2026-05-14;Valide
+CLI0041;Maison Provencale 41;Nantes;Pays de la Loire;5 635,45;2026-06-15;Valide
+CLI0042;Etablissements Muller 42;Paris;Ile-de-France;5 772,90;2026-07-16;Valide
+CLI0043;Societe Generale du Batiment 43;Lyon;Auvergne-Rhone-Alpes;5 910,35;2026-08-17;Valide
+CLI0044;Cabinet Andre & Fils 44;Marseille;PACA;6 047,80;2026-09-18;Invalide
+CLI0045;Enterprise Cotiere 45;Bordeaux;Nouvelle-Aquitaine;6 185,25;2026-01-10;Valide
+CLI0046;Groupe Herisson 46;Lille;Hauts-de-France;6 322,70;2026-02-11;Valide
+CLI0047;Maison Provencale 47;Nantes;Pays de la Loire;6 460,15;2026-03-12;Valide
+CLI0048;Etablissements Muller 48;Paris;Ile-de-France;6 597,60;2026-04-13;Valide
+CLI0049;Societe Generale du Batiment 49;Lyon;Auvergne-Rhone-Alpes;6 735,05;2026-05-14;Valide
+CLI0050;Cabinet Andre & Fils 50;Marseille;PACA;6 872,50;2026-06-15;Valide
+CLI0051;Enterprise Cotiere 51;Bordeaux;Nouvelle-Aquitaine;7 009,95;2026-07-16;Valide
+CLI0052;Groupe Herisson 52;Lille;Hauts-de-France;7 147,40;2026-08-17;Valide
+CLI0053;Maison Provencale 53;Nantes;Pays de la Loire;7 284,85;2026-09-18;Valide
+CLI0054;Etablissements Muller 54;Paris;Ile-de-France;7 422,30;2026-01-10;Valide
+CLI0055;Societe Generale du Batiment 55;Lyon;Auvergne-Rhone-Alpes;7 559,75;2026-02-11;Invalide
+CLI0056;Cabinet Andre & Fils 56;Marseille;PACA;7 697,20;2026-03-12;Valide
+CLI0057;Enterprise Cotiere 57;Bordeaux;Nouvelle-Aquitaine;7 834,65;2026-04-13;Valide
+CLI0058;Groupe Herisson 58;Lille;Hauts-de-France;7 972,10;2026-05-14;Valide
+CLI0059;Maison Provencale 59;Nantes;Pays de la Loire;8 109,55;2026-06-15;Valide
+CLI0060;Etablissements Muller 60;Paris;Ile-de-France;8 247,00;2026-07-16;Valide
+CLI0061;Societe Generale du Batiment 61;Lyon;Auvergne-Rhone-Alpes;8 384,45;2026-08-17;Valide
+CLI0062;Cabinet Andre & Fils 62;Marseille;PACA;8 521,90;2026-09-18;Valide
+CLI0063;Enterprise Cotiere 63;Bordeaux;Nouvelle-Aquitaine;8 659,35;2026-01-10;Valide
+CLI0064;Groupe Herisson 64;Lille;Hauts-de-France;8 796,80;2026-02-11;Valide
+CLI0065;Maison Provencale 65;Nantes;Pays de la Loire;8 934,25;2026-03-12;Valide
+CLI0066;Etablissements Muller 66;Paris;Ile-de-France;9 071,70;2026-04-13;Invalide
+CLI0067;Societe Generale du Batiment 67;Lyon;Auvergne-Rhone-Alpes;9 209,15;2026-05-14;Valide
+CLI0068;Cabinet Andre & Fils 68;Marseille;PACA;9 346,60;2026-06-15;Valide
+CLI0069;Enterprise Cotiere 69;Bordeaux;Nouvelle-Aquitaine;9 484,05;2026-07-16;Valide
+CLI0070;Groupe Herisson 70;Lille;Hauts-de-France;9 621,50;2026-08-17;Valide
+CLI0071;Maison Provencale 71;Nantes;Pays de la Loire;9 758,95;2026-09-18;Valide
+CLI0072;Etablissements Muller 72;Paris;Ile-de-France;9 896,40;2026-01-10;Valide
+CLI0073;Societe Generale du Batiment 73;Lyon;Auvergne-Rhone-Alpes;10 033,85;2026-02-11;Valide
+CLI0074;Cabinet Andre & Fils 74;Marseille;PACA;10 171,30;2026-03-12;Valide
+CLI0075;Enterprise Cotiere 75;Bordeaux;Nouvelle-Aquitaine;10 308,75;2026-04-13;Valide
+CLI0076;Groupe Herisson 76;Lille;Hauts-de-France;10 446,20;2026-05-14;Valide
+CLI0077;Maison Provencale 77;Nantes;Pays de la Loire;10 583,65;2026-06-15;Invalide
+CLI0078;Etablissements Muller 78;Paris;Ile-de-France;10 721,10;2026-07-16;Valide
+CLI0079;Societe Generale du Batiment 79;Lyon;Auvergne-Rhone-Alpes;10 858,55;2026-08-17;Valide
+CLI0080;Cabinet Andre & Fils 80;Marseille;PACA;10 996,00;2026-09-18;Valide
+CLI0081;Enterprise Cotiere 81;Bordeaux;Nouvelle-Aquitaine;11 133,45;2026-01-10;Valide
+CLI0082;Groupe Herisson 82;Lille;Hauts-de-France;11 270,90;2026-02-11;Valide
+CLI0083;Maison Provencale 83;Nantes;Pays de la Loire;11 408,35;2026-03-12;Valide
+CLI0084;Etablissements Muller 84;Paris;Ile-de-France;11 545,80;2026-04-13;Valide
+CLI0085;Societe Generale du Batiment 85;Lyon;Auvergne-Rhone-Alpes;11 683,25;2026-05-14;Valide
+CLI0086;Cabinet Andre & Fils 86;Marseille;PACA;11 820,70;2026-06-15;Valide
+CLI0087;Enterprise Cotiere 87;Bordeaux;Nouvelle-Aquitaine;11 958,15;2026-07-16;Valide
+CLI0088;Groupe Herisson 88;Lille;Hauts-de-France;12 095,60;2026-08-17;Invalide
+CLI0089;Maison Provencale 89;Nantes;Pays de la Loire;12 233,05;2026-09-18;Valide
+CLI0090;Etablissements Muller 90;Paris;Ile-de-France;12 370,50;2026-01-10;Valide
+CLI0091;Societe Generale du Batiment 91;Lyon;Auvergne-Rhone-Alpes;12 507,95;2026-02-11;Valide
+CLI0092;Cabinet Andre & Fils 92;Marseille;PACA;12 645,40;2026-03-12;Valide
+CLI0093;Enterprise Cotiere 93;Bordeaux;Nouvelle-Aquitaine;12 782,85;2026-04-13;Valide
+CLI0094;Groupe Herisson 94;Lille;Hauts-de-France;12 920,30;2026-05-14;Valide
+CLI0095;Maison Provencale 95;Nantes;Pays de la Loire;13 057,75;2026-06-15;Valide
+CLI0096;Etablissements Muller 96;Paris;Ile-de-France;13 195,20;2026-07-16;Valide
+CLI0097;Societe Generale du Batiment 97;Lyon;Auvergne-Rhone-Alpes;13 332,65;2026-08-17;Valide
+CLI0098;Cabinet Andre & Fils 98;Marseille;PACA;13 470,10;2026-09-18;Valide
+CLI0099;Enterprise Cotiere 99;Bordeaux;Nouvelle-Aquitaine;13 607,55;2026-01-10;Invalide
+CLI0100;Groupe Herisson 100;Lille;Hauts-de-France;13 745,00;2026-02-11;Valide
+CLI0101;Maison Provencale 101;Nantes;Pays de la Loire;13 882,45;2026-03-12;Valide
+CLI0102;Etablissements Muller 102;Paris;Ile-de-France;14 019,90;2026-04-13;Valide
+CLI0103;Societe Generale du Batiment 103;Lyon;Auvergne-Rhone-Alpes;14 157,35;2026-05-14;Valide
+CLI0104;Cabinet Andre & Fils 104;Marseille;PACA;14 294,80;2026-06-15;Valide
+CLI0105;Enterprise Cotiere 105;Bordeaux;Nouvelle-Aquitaine;14 432,25;2026-07-16;Valide
+CLI0106;Groupe Herisson 106;Lille;Hauts-de-France;14 569,70;2026-08-17;Valide
+CLI0107;Maison Provencale 107;Nantes;Pays de la Loire;14 707,15;2026-09-18;Valide
+CLI0108;Etablissements Muller 108;Paris;Ile-de-France;14 844,60;2026-01-10;Valide
+CLI0109;Societe Generale du Batiment 109;Lyon;Auvergne-Rhone-Alpes;14 982,05;2026-02-11;Valide
+CLI0110;Cabinet Andre & Fils 110;Marseille;PACA;15 119,50;2026-03-12;Invalide
+CLI0111;Enterprise Cotiere 111;Bordeaux;Nouvelle-Aquitaine;15 256,95;2026-04-13;Valide
+CLI0112;Groupe Herisson 112;Lille;Hauts-de-France;15 394,40;2026-05-14;Valide
+CLI0113;Maison Provencale 113;Nantes;Pays de la Loire;15 531,85;2026-06-15;Valide
+CLI0114;Etablissements Muller 114;Paris;Ile-de-France;15 669,30;2026-07-16;Valide
+CLI0115;Societe Generale du Batiment 115;Lyon;Auvergne-Rhone-Alpes;15 806,75;2026-08-17;Valide
+CLI0116;Cabinet Andre & Fils 116;Marseille;PACA;15 944,20;2026-09-18;Valide
+CLI0117;Enterprise Cotiere 117;Bordeaux;Nouvelle-Aquitaine;16 081,65;2026-01-10;Valide
+CLI0118;Groupe Herisson 118;Lille;Hauts-de-France;16 219,10;2026-02-11;Valide
+CLI0119;Maison Provencale 119;Nantes;Pays de la Loire;16 356,55;2026-03-12;Valide
+CLI0120;Etablissements Muller 120;Paris;Ile-de-France;16 494,00;2026-04-13;Valide
+CLI0121;Societe Generale du Batiment 121;Lyon;Auvergne-Rhone-Alpes;16 631,45;2026-05-14;Invalide
+CLI0122;Cabinet Andre & Fils 122;Marseille;PACA;16 768,90;2026-06-15;Valide
+CLI0123;Enterprise Cotiere 123;Bordeaux;Nouvelle-Aquitaine;16 906,35;2026-07-16;Valide
+CLI0124;Groupe Herisson 124;Lille;Hauts-de-France;17 043,80;2026-08-17;Valide
+CLI0125;Maison Provencale 125;Nantes;Pays de la Loire;17 181,25;2026-09-18;Valide
+CLI0126;Etablissements Muller 126;Paris;Ile-de-France;17 318,70;2026-01-10;Valide
+CLI0127;Societe Generale du Batiment 127;Lyon;Auvergne-Rhone-Alpes;17 456,15;2026-02-11;Valide
+CLI0128;Cabinet Andre & Fils 128;Marseille;PACA;17 593,60;2026-03-12;Valide
+CLI0129;Enterprise Cotiere 129;Bordeaux;Nouvelle-Aquitaine;17 731,05;2026-04-13;Valide
+CLI0130;Groupe Herisson 130;Lille;Hauts-de-France;17 868,50;2026-05-14;Valide
+CLI0131;Maison Provencale 131;Nantes;Pays de la Loire;18 005,95;2026-06-15;Valide
+CLI0132;Etablissements Muller 132;Paris;Ile-de-France;18 143,40;2026-07-16;Invalide
+CLI0133;Societe Generale du Batiment 133;Lyon;Auvergne-Rhone-Alpes;18 280,85;2026-08-17;Valide
+CLI0134;Cabinet Andre & Fils 134;Marseille;PACA;18 418,30;2026-09-18;Valide
+CLI0135;Enterprise Cotiere 135;Bordeaux;Nouvelle-Aquitaine;18 555,75;2026-01-10;Valide
+CLI0136;Groupe Herisson 136;Lille;Hauts-de-France;18 693,20;2026-02-11;Valide
+CLI0137;Maison Provencale 137;Nantes;Pays de la Loire;18 830,65;2026-03-12;Valide
+CLI0138;Etablissements Muller 138;Paris;Ile-de-France;18 968,10;2026-04-13;Valide
+CLI0139;Societe Generale du Batiment 139;Lyon;Auvergne-Rhone-Alpes;19 105,55;2026-05-14;Valide
+CLI0140;Cabinet Andre & Fils 140;Marseille;PACA;19 243,00;2026-06-15;Valide
+CLI0141;Enterprise Cotiere 141;Bordeaux;Nouvelle-Aquitaine;19 380,45;2026-07-16;Valide
+CLI0142;Groupe Herisson 142;Lille;Hauts-de-France;19 517,90;2026-08-17;Valide
+CLI0143;Maison Provencale 143;Nantes;Pays de la Loire;19 655,35;2026-09-18;Invalide
+CLI0144;Etablissements Muller 144;Paris;Ile-de-France;19 792,80;2026-01-10;Valide
+CLI0145;Societe Generale du Batiment 145;Lyon;Auvergne-Rhone-Alpes;19 930,25;2026-02-11;Valide
+CLI0146;Cabinet Andre & Fils 146;Marseille;PACA;20 067,70;2026-03-12;Valide
+CLI0147;Enterprise Cotiere 147;Bordeaux;Nouvelle-Aquitaine;20 205,15;2026-04-13;Valide
+CLI0148;Groupe Herisson 148;Lille;Hauts-de-France;20 342,60;2026-05-14;Valide
+CLI0149;Maison Provencale 149;Nantes;Pays de la Loire;20 480,05;2026-06-15;Valide
+CLI0150;Etablissements Muller 150;Paris;Ile-de-France;20 617,50;2026-07-16;Valide
+CLI0151;Societe Generale du Batiment 151;Lyon;Auvergne-Rhone-Alpes;20 754,95;2026-08-17;Valide
+CLI0152;Cabinet Andre & Fils 152;Marseille;PACA;20 892,40;2026-09-18;Valide
+CLI0153;Enterprise Cotiere 153;Bordeaux;Nouvelle-Aquitaine;21 029,85;2026-01-10;Valide
+CLI0154;Groupe Herisson 154;Lille;Hauts-de-France;21 167,30;2026-02-11;Invalide
+CLI0155;Maison Provencale 155;Nantes;Pays de la Loire;21 304,75;2026-03-12;Valide
+CLI0156;Etablissements Muller 156;Paris;Ile-de-France;21 442,20;2026-04-13;Valide
+CLI0157;Societe Generale du Batiment 157;Lyon;Auvergne-Rhone-Alpes;21 579,65;2026-05-14;Valide
+CLI0158;Cabinet Andre & Fils 158;Marseille;PACA;21 717,10;2026-06-15;Valide
+CLI0159;Enterprise Cotiere 159;Bordeaux;Nouvelle-Aquitaine;21 854,55;2026-07-16;Valide
+CLI0160;Groupe Herisson 160;Lille;Hauts-de-France;21 992,00;2026-08-17;Valide
+CLI0161;Maison Provencale 161;Nantes;Pays de la Loire;22 129,45;2026-09-18;Valide
+CLI0162;Etablissements Muller 162;Paris;Ile-de-France;22 266,90;2026-01-10;Valide
+CLI0163;Societe Generale du Batiment 163;Lyon;Auvergne-Rhone-Alpes;22 404,35;2026-02-11;Valide
+CLI0164;Cabinet Andre & Fils 164;Marseille;PACA;22 541,80;2026-03-12;Valide
+CLI0165;Enterprise Cotiere 165;Bordeaux;Nouvelle-Aquitaine;22 679,25;2026-04-13;Invalide
+CLI0166;Groupe Herisson 166;Lille;Hauts-de-France;22 816,70;2026-05-14;Valide
+CLI0167;Maison Provencale 167;Nantes;Pays de la Loire;22 954,15;2026-06-15;Valide
+CLI0168;Etablissements Muller 168;Paris;Ile-de-France;23 091,60;2026-07-16;Valide
+CLI0169;Societe Generale du Batiment 169;Lyon;Auvergne-Rhone-Alpes;23 229,05;2026-08-17;Valide
+CLI0170;Cabinet Andre & Fils 170;Marseille;PACA;23 366,50;2026-09-18;Valide
+CLI0171;Enterprise Cotiere 171;Bordeaux;Nouvelle-Aquitaine;23 503,95;2026-01-10;Valide
+CLI0172;Groupe Herisson 172;Lille;Hauts-de-France;23 641,40;2026-02-11;Valide
+CLI0173;Maison Provencale 173;Nantes;Pays de la Loire;23 778,85;2026-03-12;Valide
+CLI0174;Etablissements Muller 174;Paris;Ile-de-France;23 916,30;2026-04-13;Valide
+CLI0175;Societe Generale du Batiment 175;Lyon;Auvergne-Rhone-Alpes;24 053,75;2026-05-14;Valide
+CLI0176;Cabinet Andre & Fils 176;Marseille;PACA;24 191,20;2026-06-15;Invalide
+CLI0177;Enterprise Cotiere 177;Bordeaux;Nouvelle-Aquitaine;24 328,65;2026-07-16;Valide
+CLI0178;Groupe Herisson 178;Lille;Hauts-de-France;24 466,10;2026-08-17;Valide
+CLI0179;Maison Provencale 179;Nantes;Pays de la Loire;24 603,55;2026-09-18;Valide
+CLI0180;Etablissements Muller 180;Paris;Ile-de-France;24 741,00;2026-01-10;Valide
+CLI0181;Societe Generale du Batiment 181;Lyon;Auvergne-Rhone-Alpes;24 878,45;2026-02-11;Valide
+CLI0182;Cabinet Andre & Fils 182;Marseille;PACA;25 015,90;2026-03-12;Valide
+CLI0183;Enterprise Cotiere 183;Bordeaux;Nouvelle-Aquitaine;25 153,35;2026-04-13;Valide
+CLI0184;Groupe Herisson 184;Lille;Hauts-de-France;25 290,80;2026-05-14;Valide
+CLI0185;Maison Provencale 185;Nantes;Pays de la Loire;25 428,25;2026-06-15;Valide
+CLI0186;Etablissements Muller 186;Paris;Ile-de-France;25 565,70;2026-07-16;Valide
+CLI0187;Societe Generale du Batiment 187;Lyon;Auvergne-Rhone-Alpes;25 703,15;2026-08-17;Invalide
+CLI0188;Cabinet Andre & Fils 188;Marseille;PACA;25 840,60;2026-09-18;Valide
+CLI0189;Enterprise Cotiere 189;Bordeaux;Nouvelle-Aquitaine;25 978,05;2026-01-10;Valide
+CLI0190;Groupe Herisson 190;Lille;Hauts-de-France;26 115,50;2026-02-11;Valide
+CLI0191;Maison Provencale 191;Nantes;Pays de la Loire;26 252,95;2026-03-12;Valide
+CLI0192;Etablissements Muller 192;Paris;Ile-de-France;26 390,40;2026-04-13;Valide
+CLI0193;Societe Generale du Batiment 193;Lyon;Auvergne-Rhone-Alpes;26 527,85;2026-05-14;Valide
+CLI0194;Cabinet Andre & Fils 194;Marseille;PACA;26 665,30;2026-06-15;Valide
+CLI0195;Enterprise Cotiere 195;Bordeaux;Nouvelle-Aquitaine;26 802,75;2026-07-16;Valide
+CLI0196;Groupe Herisson 196;Lille;Hauts-de-France;26 940,20;2026-08-17;Valide
+CLI0197;Maison Provencale 197;Nantes;Pays de la Loire;27 077,65;2026-09-18;Valide
+CLI0198;Etablissements Muller 198;Paris;Ile-de-France;27 215,10;2026-01-10;Invalide
+CLI0199;Societe Generale du Batiment 199;Lyon;Auvergne-Rhone-Alpes;27 352,55;2026-02-11;Valide
+CLI0200;Cabinet Andre & Fils 200;Marseille;PACA;27 490,00;2026-03-12;Valide
+CLI0007;Etablissements Muller 7;Bordeaux;Nouvelle-Aquitaine;961,15;2026-08-17;Valide
+CLI0042;Enterprise Cotiere 42;Lyon;Auvergne-Rhone-Alpes;5772,90;2026-07-16;Valide
+CLI9998;;Paris;Ile-de-France;-500,00;2026-08-01;Inconnu
+XXX123;Societe Sans Code Valide;Nice;PACA;abc;pas-une-date;Valide

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<referentiel>
+  <parametres>
+    <parametre nom="serveur" valeur="SRVSQL01" />
+    <parametre nom="base" valeur="DWH_PROD" />
+    <parametre nom="timeout" valeur="300" />
+  </parametres>
+  <tables>
+    <table nom="kpa_parties" schema="dbo" active="true" />
+    <table nom="kpa_addresses" schema="dbo" active="true" />
+    <table nom="kpa_bank_accounts" schema="dbo" active="true" />
+    <table nom="kpa_organizations" schema="dbo" active="true" />
+  </tables>
+</referentiel>

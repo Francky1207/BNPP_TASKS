@@ -1,0 +1,12 @@
+{
+  "kpa_parties":        ["name", "first_name", "particule", "maiden_name", "marital_status", "party_id"],
+  "kpa_addresses":      ["line0", "line1", "line2", "line3", "zip_code", "city"],
+  "kpa_bank_accounts":  ["account_number", "account_holder", "iban_account", "bic_code"],
+  "kpa_organizations":  ["banner", "siret_code", "remarks"],
+  "kpa_persons":        ["maiden_name", "marital_status"],
+  "kpa_party_contacts": ["contact_name", "contact_email"],
+  "kcm_pol_beneficiaries": ["benef_name", "benef_first_name", "rank"],
+  "kcm_pol_benef_clause":  ["death_clause_text"],
+  "kcf_payments":       ["bank_account", "amount"],
+  "kcf_treasury_account_group": ["comment_text"]
+}

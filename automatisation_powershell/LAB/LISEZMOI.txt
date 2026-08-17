@@ -1,0 +1,62 @@
+================================================================================
+ LABORATOIRE DE TEST ETL - INVENTAIRE
+  Genere le 2026-08-16 21:36:49
+================================================================================
+
+ARBORESCENCE
+------------
+  01_TEXTE/
+     vues.txt                      14 definitions CREATE VIEW (cas pieges inclus)
+     vues_v2.txt                   idem + 1 alias modifie + 1 vue ajoutee
+     liste_A.txt / liste_B.txt     listes a rapprocher (doublons, casse, vide)
+     traitement.log                300 lignes de journal avec erreurs ORA-*
+     export_largeur_fixe.txt       40 lignes a largeur fixe
+
+  02_CSV/
+     clients.csv                   204 lignes, separateur ';', UTF-8 BOM, accents
+     clients_apres_migration.csv   version modifiee (ajouts/suppressions/modifs)
+     ventes.csv                    500 lignes, separateur ','
+     produits.tsv                  39 lignes, separateur TAB (PRD017 absent)
+     export_ancien_ansi.csv        encodage ANSI a convertir
+     liste_clients_a_extraire.txt  9 codes pour test de filtrage
+     quotidien/                    5 fichiers a fusionner
+
+  03_XML_JSON/
+     tables.json                   10 tables / 33 colonnes (valide)
+     tables_INVALIDE.json          JSON errone (test du diagnostic)
+     referentiel.xml               parametres et liste de tables
+
+  04_EXCEL/
+     CRE.xlsx                      feuilles : 1-CRE, Tables, MAPPING_CRE, CRE_DISTINCTS
+     base.xlsx                     feuilles : PERIMETRE CRE, RESULTAT 1
+     donnees_croisement.xlsx       feuilles : DONNEES, LISTE_A_EXTRAIRE, REFERENTIEL
+
+  05_SQL/
+     creation_jeu_test.sql         tables + requetes de controle
+
+  99_SORTIES/                      dossier vide, destine aux resultats
+
+
+ANOMALIES VOLONTAIREMENT INTRODUITES
+------------------------------------
+  * doublons        : CLI0007 et CLI0042 apparaissent deux fois
+  * casse           : "cre_parties" en minuscules dans liste_A.txt
+  * ligne vide      : derniere ligne de liste_A.txt
+  * valeur manquante: CLI9998 sans raison sociale
+  * format invalide : XXX123 (code non conforme), montant "abc", date "pas-une-date"
+  * montant negatif : CLI9998 a -500,00
+  * jointure trouee : PRD017 absent du referentiel produits
+  * CRE orphelin    : CRE_CRE_ABSENT_DE_BASE dans MAPPING_CRE
+  * colonne absente : colonne_qui_nexiste_pas dans MAPPING_CRE
+  * vue non definie : V_TFT_K_VUE_NON_DEFINIE citee mais absente de vues.txt
+  * statut exclu    : CRE_INVALIDE_TEST (CRE_STATUS = Invalide)
+  * requete vide    : CRE_SANS_REQUETE
+  * JSON errone     : tables_INVALIDE.json
+  * encodage ANSI   : export_ancien_ansi.csv
+
+Ces anomalies sont NORMALES : elles servent a verifier que les utilitaires
+les detectent et les signalent correctement au lieu de planter.
+
+================================================================================
+Pour lancer les tests : .\Start-Toolkit.ps1  (menu interactif)
+================================================================================

@@ -1,0 +1,4 @@
+{
+  "kpa_parties": ["name", "first_name",],
+  "kpa_addresses": ["line0"]
+}

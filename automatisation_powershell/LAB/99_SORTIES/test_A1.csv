@@ -1,0 +1,7 @@
+﻿"STATUT";"LIGNE_1";"VALEUR_1";"LIGNE_2";"VALEUR_2";"CLE";"COLONNE";"DETAIL"
+"SEULEMENT_DANS_1";"2";"SELECT  T.NAME                AS NOM_TIERS";"";"";"";"";"Absent de vues_v2.txt"
+"NOMBRE_OCCURRENCES_DIFFERENT";"11";"";"11";"";"";"";"13 fois dans vues.txt, 14 fois dans vues_v2.txt"
+"SEULEMENT_DANS_2";"";"";"2";"SELECT  T.NAME                AS NOM_DU_TIERS";"";"";"Absent de vues.txt"
+"SEULEMENT_DANS_2";"";"";"97";"CREATE VIEW [dbo].[V_TFT_K_NOUVELLE_VUE] AS";"";"";"Absent de vues.txt"
+"SEULEMENT_DANS_2";"";"";"98";"SELECT  N.LIBELLE             AS LIBELLE_NOUVEAU";"";"";"Absent de vues.txt"
+"SEULEMENT_DANS_2";"";"";"99";"FROM TFT.dbo.TFT_K_NOUVELLE AS N";"";"";"Absent de vues.txt"
