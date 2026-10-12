@@ -1,0 +1,76 @@
+categorie;chemin;type;date_modif;taille_octets;version;statut;fait_foi_pour;remarque
+DOC;1- BUSINESS PLAN PLATEFORME DE TELECONSULTATION.pdf;PDF;2025-08-03;177320;v1 (août 2025);Référence;Business plan;Même contenu que Business Plan.txt
+DOC;Business Plan.txt;TXT;2025-09-09;10849;copie texte;Doublon;-;Extraction texte du PDF business plan
+DOC;2- DoctoZen_PitchDeck_TarifVisuel.pptx;PPTX;2025-08-03;59306;v1;Référence;Tarification (Standard 25k / Pro 80k FCFA / options);Recoupe CDC §7
+DOC;3- MAQUETTE APPLICATION TELECONSULTATION.docx;DOCX;2025-08-13;20238;v1;Référence;Parcours écrans (maquette textuelle);Identique à MAQUETTE.txt
+DOC;MAQUETTE.txt;TXT;2025-09-09;2463;copie texte;Doublon;-;Copie partielle du DOCX maquette
+DOC;4- UNE APPLICATION DE  TELECONSULTATION MEDICALE.docx;DOCX;2025-08-13;28654;v0 (pré-CDC);Obsolète;-;Premier cahier des charges, remplacé par CDC définitif 2025-09-24
+DOC;CAHIER_DE_CHARGES.txt;TXT;2025-09-09;11055;copie texte v0;Obsolète;-;Copie texte du doc 4-
+DOC;Carnet_Sante_Concurrent.txt;TXT;2025-09-09;9332;-;Veille;-;Concurrent PASS SANTE MOUSSO
+DOC;Logiciel d’archivage médical.txt;TXT;2025-09-09;2242;-;Veille;-;ARCHIMED (concurrent/partenaire)
+DOC;DEFINITIF/0- ANALYSE FINANCIERE - 20250924.docx;DOCX;2025-09-09;34256;v1;Référence;Analyse financière;Seul exemplaire
+DOC;DEFINITIF/1- CAHIER_DES_CHARGES_DEFINITIF - 20250924.docx;DOCX;2025-09-24;35086;v1.0;Obsolète;-;Remplacé par la copie ARCHITECTURE PROJET (2026-01-16, DME détaillé)
+DOC;ARCHITECTURE PROJET/1- CAHIER_DES_CHARGES_DEFINITIF - 20250924.docx;DOCX;2026-01-16;35703;v1.1;Fait foi;Périmètre fonctionnel (12 modules métier, exigences);Ajoute le détail du dossier médical (constantes, chirurgies, antécédents familiaux)
+DOC;DEFINITIF/2- LISTE COMPLETE DES MODULES - 20250924.docx;DOCX;2025-09-28;24268;v1.0;Doublon;-;Contenu identique à la copie ARCHITECTURE PROJET (lignes vides en plus)
+DOC;ARCHITECTURE PROJET/2- LISTE COMPLETE DES MODULES - 20250924.docx;DOCX;2026-06-08;23897;v1.0 (resauvé);Fait foi;Découpage 26 modules techniques;Texte identique à DEFINITIF
+DOC;DEFINITIF/3- ROADMAP MODULAIRE ET PLAN SCRUM - 20250924.docx;DOCX;2025-12-22;28621;v1;Doublon;-;Identique octet pour octet à la copie ARCHITECTURE PROJET
+DOC;ARCHITECTURE PROJET/3- ROADMAP MODULAIRE ET PLAN SCRUM - 20250924.docx;DOCX;2025-12-22;28621;v1;Obsolète;-;Remplacée par DoctoZen_Roadmap_Technique.docx (avril 2026)
+DOC;ARCHITECTURE PROJET/DoctoZen_Roadmap_Technique_Ancienne_Version.docx;MD (extension .docx trompeuse);2026-04-15;14868;v0;Obsolète;-;Fichier Markdown nommé .docx (non ouvrable dans Word) ; = roadmap Scrum + PostgreSQL/Azure
+DOC;ARCHITECTURE PROJET/DoctoZen_Roadmap_Technique.docx;DOCX;2026-04-15;27203;rév. avril 2026;Fait foi (statuts/ordre);Ordre des modules, règles transversales;Contradictions : front MVC vs Blazor, ports, statut MR « TERMINÉ » non vérifié
+DOC;DEFINITIF/4- Architecture Technique .NET.cs;MD (extension .cs);2025-09-24;81106;v1;Doublon;-;Identique à la copie ARCHITECTURE PROJET
+DOC;ARCHITECTURE PROJET/4- Architecture Technique .NET.cs;MD (extension .cs);2025-09-24;81106;v1;Obsolète/contradictoire;-;PostgreSQL + Kubernetes + Blazor ; le code utilise SQL Server ; surdimensionné pour 1 dev
+DOC;DEFINITIF/5- PROMPT COMPLET - GÉNÉRATION BACKEND DOCTOZEN.cs;MD (extension .cs);2025-09-24;21311;v1;Doublon;-;Identique à la copie ARCHITECTURE PROJET
+DOC;ARCHITECTURE PROJET/5- PROMPT COMPLET - GÉNÉRATION BACKEND DOCTOZEN.cs;MD (extension .cs);2025-09-24;21311;v1;Obsolète;-;Prompt de génération IA ; aucune valeur de spec
+DOC;DEFINITIF/Presentation_Equipe_Projet.pptx;PPTX;2025-10-01;3338292;v1;Doublon;-;Identique à la copie ARCHITECTURE PROJET (quasi uniquement images)
+DOC;ARCHITECTURE PROJET/Presentation_Equipe_Projet.pptx;PPTX;2025-10-01;3338292;v1;Référence;Présentation équipe;-
+DOC;DEFINITIF/PROTOCOLE D’ACCORD DE PARTENARIAT[1].docx;DOCX;2025-09-29;16431;v1;Référence;Juridique partenariat;Seul exemplaire
+DOC;ARCHITECTURE PROJET/architecture-globale.md;MD;2026-01-14;19096;v1;Obsolète/contradictoire;-;7 dépôts Git + NuGet privé ; front Blazor ; à abandonner (1 seul dev)
+DOC;ARCHITECTURE PROJET/13-setup-sprint3-for-developpers.md;MD;2026-01-14;6296;v1;Obsolète;-;Prévoit DoctoZen.Web.React (jamais créé) ; doublon de C:\...\13-setup-sprint3-for-developpers.md
+DOC;ARCHITECTURE PROJET/PREPARATION_DEV_EQUIPE/Module Medical Records/USE_CASES_DEV_BACKEND/1-USE_CASES_BACKEND_MEDICAL_RECORDS.md;MD;2026-01-16;40785;v1;Fait foi;MR backend UC-00 à UC-04;-
+DOC;ARCHITECTURE PROJET/PREPARATION_DEV_EQUIPE/Module Medical Records/USE_CASES_DEV_BACKEND/2-USE_CASES_BACKEND_MEDICAL_RECORDS.md;MD;2026-01-16;35912;v1;Fait foi;MR backend UC-05 à UC-10;-
+DOC;ARCHITECTURE PROJET/PREPARATION_DEV_EQUIPE/Module Medical Records/USE_CASES_DEV_BACKEND/3-USE_CASES_BACKEND_MEDICAL_RECORDS.md;MD;2026-01-16;49362;v1;Fait foi;MR backend UC-11 à UC-16;-
+DOC;ARCHITECTURE PROJET/PREPARATION_DEV_EQUIPE/Module Medical Records/USE_CASES_DEV_FRONTEND/1-USE_CASES_FRONTEND_MEDICAL_RECORDS.md;MD;2026-01-16;10873;v1;Fait foi;MR frontend UC-F00 à UC-F13;-
+DOC;ARCHITECTURE PROJET/PREPARATION_DEV_EQUIPE/Module Medical Records/USE_CASES_DEV_FRONTEND/2-DATA_CONTRACT_FRONTEND_MEDICAL_RECORDS.md;MD;2026-01-16;24285;v1;Fait foi;Contrats DTO front/back MR;-
+DOC;ARCHITECTURE PROJET/PREPARATION_DEV_EQUIPE/Module Consultation/USE_CASES_DEV_BACKEND/DoctoZen_Module5_API_DevBack.md;MD;2026-07-27;22182;v1;Fait foi;Consultation API UC-API-CON-00 à 16;Ports Payments/Prescriptions différents de la roadmap
+DOC;ARCHITECTURE PROJET/PREPARATION_DEV_EQUIPE/Module Consultation/USE_CASES_DEV_FRONTEND/DoctoZen_Module5_Frontend_DevFront.md;MD;2026-07-27;26571;v1;Fait foi;Consultation front UC-FRONT-CON-00 à 13;Blazor greffé sur MR (contredit roadmap MVC)
+DOC;ARCHITECTURE PROJET/PREPARATION_DEV_EQUIPE/CONFIGURATION TECHNIQUE/ENTITES DE BASE/DoctoZen.Shared.DomainEntitiesEnumsAndValueObjects.cs;CS (gabarit);2026-01-16;3459;-;Obsolète;-;Gabarit d'entités ; le code réel fait foi
+DOC;ARCHITECTURE PROJET/PREPARATION_DEV_EQUIPE/CONFIGURATION TECHNIQUE/ENTITES DE BASE/MedicalRecords.Domain.Entities.cs;CS (gabarit);2026-01-16;3479;-;Obsolète;-;Gabarit d'entités ; le code réel fait foi
+DOC;ARCHITECTURE PROJET/PREPARATION_DEV_EQUIPE/CONFIGURATION TECHNIQUE/DATABASE/script_DB_DoctoZen_MedicalRecords.sql;SQL;2026-01-16;19584;v1;Obsolète;-;Schéma initial ; remplacé par les migrations EF Core
+DOC;ARCHITECTURE PROJET/script_MedicalRecord_Insert.sql;SQL (UTF-16);2026-04-18;86978;v1;Référence seed;Données de test MR;Base cible codée en dur [DoctoZen_MedicalRecords_11-04-26] ; 32 catégories, 40 maladies, 10 vaccins, 3 DME
+DOC;REQUETES RAPIDES/categorie_diseases.sql;SQL;2026-04-26;428;-;Utilitaire;-;Requête ad hoc
+DOC;Estimation Fonctionnalités DoctoZen.xlsx;XLSX;2026-02-13;12696;v1;Référence;Découpage UC MR pour estimation;Temps non renseignés
+DOC;Observations_20260426.md;MD;2026-04-26;1448;-;Fait foi (règles métier);Rattachement médecin↔structure, commission/abonnement;Absent du CDC : à intégrer
+DOC;AMLIORATIONS_MEDICAL_RECORD_20260426.docx;DOCX;2026-04-26;562885;v1;Remplacé;-;Même liste que le PDF du 06/06
+DOC;AMLIORATIONS_DOCTOZEN_CLIENT_20260606.pdf;PDF;2026-06-06;997489;v2;Fait foi;Retours recette MR (libellés, vaccins éligibles âge/genre);Captures + annotations
+DOC;TAF_CEDRIC_BRICE_20260607.docx;DOCX;2026-06-07;97162;-;Fait foi (dernier plan d'action);Répartition des tâches juin 2026;Restructuration client par module, PWA/offline, VPS, WebRTC
+DOC;Questions Recueil Besoins/1.png;PNG;2025-08-13;65450;-;Référence;Concurrence (SkanMed);Capture du business plan
+DOC;Questions Recueil Besoins/2.png;PNG;2025-08-13;97064;-;Référence;Recueil besoins;Capture
+DOC;Questions Recueil Besoins/3.0.png;PNG;2025-08-13;194298;-;Référence;Recueil besoins;Capture
+DOC;Questions Recueil Besoins/3.png;PNG;2025-08-13;75818;-;Référence;Recueil besoins;Capture
+DOC;Questions Recueil Besoins/4-Dossier médicale....png;PNG;2025-08-13;143435;-;Référence;Tarification;Nom trompeur : contient la grille tarifaire
+DOC;Questions Recueil Besoins/5.png;PNG;2025-08-13;46833;-;Référence;Recueil besoins;Capture
+IMG;IMAGES/IMAGE 1.jpg;JPG;2025-08-06;102355;-;Référence UI;Accueil Doctolib (rappels santé, barre onglets 5 items);-
+IMG;IMAGES/IMAGE 2.jpg;JPG;2025-08-06;50102;-;Référence UI;Doctolib « Profil santé » (liste rubriques DME);-
+IMG;IMAGES/IMAGE 3.jpg;JPG;2025-08-06;62020;-;Référence UI;Doctolib recherche + historique soignants;-
+IMG;IMAGES/IMAGE 4.jpg;JPG;2025-08-06;77884;-;Référence UI;Maiia accueil non connecté;-
+IMG;IMAGES/IMAGE 5.jpg;JPG;2025-08-06;78897;-;Référence UI;Maiia téléconsultation immédiate (file d'attente);-
+IMG;IMAGES/IMAGE 6.jpg;JPG;2025-08-06;74324;-;Référence UI;Maiia accueil connecté (carnet de santé en tuiles);-
+IMG;IMAGES/IMAGE 7.jpg;JPG;2025-08-06;68408;-;Référence UI;Maiia recherche médicament;-
+IMG;IMAGES/IMAGE 8.jpg;JPG;2025-08-06;76462;-;Référence UI;Fiche médicament (onglets);-
+IMG;IMAGES/IMAGE 9.jpg;JPG;2025-08-06;76352;-;Référence UI;Fiche médicament posologie;-
+IMG;IMAGES/IMAGE 10.jpg;JPG;2025-08-06;78098;-;Référence UI;Fiche médicament (onglets défilants);-
+IMG;IMAGES/IMAGE11.jpg;JPG;2025-08-06;80228;-;Référence UI;Fiche médicament « Voir plus »;-
+IMG;IMAGES/IMAGE 12.jpg;JPG;2025-08-06;77620;-;Référence UI;Documents associés téléchargeables;-
+IMG;IMAGES/IMAGE 13.jpg;JPG;2025-08-06;58414;-;Référence UI;Profil (proches, paiement, notifications);-
+SRC-D;ARCHITECTURE PROJET/Package de livraison_MedicalRecord_Web/DoctoZen.Client;Projet Blazor Server net8.0;2026-04-18;-;livraison 18/04/2026;Obsolète;-;Version antérieure du client ; 22 fichiers diffèrent de C: (≈767 lignes) ; C: plus récent (06/06/2026)
+SRC-D;ARCHITECTURE PROJET/Package de livraison_MedicalRecord_Web/publish_Authentication_Api;Binaires publiés;2026-04-18;-;build 18/04/2026;Obsolète + risque;-;Contient appsettings.json avec secrets et nuget.config ; dépend d'AutoMapper (absent du csproj C:) = build d'une autre branche
+SRC-D;ARCHITECTURE PROJET/Package de livraison_MedicalRecord_Web/Readme.md;MD;2026-04-18;1316;-;Référence;Configuration du client et du seed;-
+PROJET;C:\Users\aurel\source\repos\DoctoZen-Project\DoctoZen.Authentication\DoctoZen.Authentication.csproj;ASP.NET Core Web API net8.0;2026-06-06 (dernier commit);-;-;Actif;Module Auth + User Mgmt;Build OK, 0 avertissement, aucun test ; branche feature/auth-demo-20260415
+PROJET;C:\Users\aurel\source\repos\DoctoZen-Project\DoctoZen.MedicalRecords\Doctozen.MedicalRecord\DoctoZen.MedicalRecords.sln;Solution 6 projets net8.0 (API/Application/Domain/Infrastructure + 2 tests);2026-06-06 (dernier commit);-;-;Actif;Module DME;Build OK (49 avertissements, NU1903 SSH.NET vulnérable) ; tests 16 OK / 3 KO
+PROJET;C:\Users\aurel\source\repos\DoctoZen-Project\DoctoZen.Web.Blazor\DoctoZen.Client.csproj;Blazor Web App (Interactive Server) net8.0;2026-06-06 (dernier commit);-;-;Actif;Front unique actuel;Build OK, 275 avertissements (nullabilité) ; template Metronic
+PROJET;C:\Users\aurel\source\repos\DoctoZen-Project\DoctoZen.ApiGateway\DoctoZen.ApiGateway.csproj;ASP.NET Core + Ocelot 23 net8.0;2026-01-14;-;-;Squelette;-;28 lignes ; route Auth vers port 5001 (faux) ; non utilisé
+PROJET;C:\Users\aurel\source\repos\DoctoZen-Project\DoctoZen.Shared.Domain\DoctoZen.Shared.Domain.csproj;Class library net8.0 (NuGet GitHub 1.0.0/1.1.0);2026-03-28;-;1.0.0 (Auth) / 1.1.0 (MR);Actif;Enums/ValueObjects partagés;2 avertissements CS0108 ; versions divergentes entre services
+PROJET;C:\Users\aurel\source\repos\DoctoZen-Project\DoctoZen.Shared.Contracts\DoctoZen.Shared.Contracts.csproj;Class library net8.0;2026-01-14;-;-;Squelette non commité;-;62 lignes ; référencé par aucun service
+PROJET;C:\Users\aurel\source\repos\DoctoZen-Project\DoctoZen.Shared.Infrastructure\DoctoZen.Shared.Infrastructure.csproj;Class library net8.0;2026-01-14;-;-;Squelette non commité;-;92 lignes ; référencé par aucun service
+PROJET;C:\Users\aurel\source\repos\DoctoZen-Project\DoctoZen-Solution\DoctoZen-Solution.sln;Solution vide + scripts;2026-01-14;-;-;Obsolète;-;Aucun projet dans la .sln ; tools/run-all-services.ps1 pointe vers des chemins inexistants
+PROJET;C:\wamp64\www\nova;PHP 8.3 / JS vanilla PWA;2026-10 (actif);-;-;Référence;Voix + IA + PWA offline + déploiement VPS;Hors périmètre DoctoZen ; sources de réutilisation
