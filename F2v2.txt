@@ -1,0 +1,155 @@
+# Traitement DataStudio : lance le client, attend sa fin, arrete le serveur.
+# Les parametres sont fournis par le .bat (aucune valeur en dur ici).
+param(
+    [Parameter(Mandatory)][string]$LogFile,
+    [Parameter(Mandatory)][string]$DsPath,
+    [Parameter(Mandatory)][string]$DsClientExe,
+    [Parameter(Mandatory)][string]$DsServerExe,
+    [Parameter(Mandatory)][string]$Workspace,
+    [Parameter(Mandatory)][string]$DsUser,
+    [Parameter(Mandatory)][string]$ProjectName,
+    [Parameter(Mandatory)][string]$SecretFile,
+    [int]$CloseTimeoutSec      = 60,
+    [int]$ServerStopTimeoutSec = 30
+)
+
+$ErrorActionPreference = "Stop"
+
+$DsClientPath = Join-Path $DsPath $DsClientExe
+$DsServerPath = Join-Path $DsPath $DsServerExe
+
+# Ecrit dans la console et dans la log partagee avec le .bat.
+# Quelques reessais si le fichier est verrouille ; jamais bloquant.
+function Write-Log {
+    param([string]$Message, [string]$Level = "INFO")
+    $line = "{0} [PS ] [{1}] {2}" -f (Get-Date -Format 'dd/MM/yyyy HH:mm:ss'), $Level, $Message
+    Write-Host $line
+    for ($i = 1; $i -le 5; $i++) {
+        try { Add-Content -Path $LogFile -Value $line -Encoding ASCII; return }
+        catch { Start-Sleep -Milliseconds 100 }
+    }
+}
+
+# Guillemets uniquement si l'argument contient un espace
+function Format-Arg([string]$a) { if ($a -match '\s') { '"' + $a + '"' } else { $a } }
+
+# Serveurs DataStudio lances depuis ce repertoire d'installation
+function Get-DsServer {
+    Get-Process -Name ([IO.Path]::GetFileNameWithoutExtension($DsServerExe)) -ErrorAction SilentlyContinue |
+        Where-Object { $_.Path -eq $DsServerPath }
+}
+
+$LaunchExitCode = $null
+$CloseExitCode  = $null
+$bstr           = [IntPtr]::Zero
+$plainText      = $null
+$Passphrase     = $null
+$Failed         = $false
+$totalSw        = [System.Diagnostics.Stopwatch]::StartNew()
+
+Write-Log "DEBUT SCRIPT POWERSHELL (workspace=$Workspace, projet=$ProjectName, utilisateur Windows=$env:USERNAME)"
+
+try {
+    # Verification des fichiers
+    if (-not (Test-Path $DsClientPath)) { throw "Executable DataStudio introuvable : $DsClientPath" }
+    if (-not (Test-Path $SecretFile))   { throw "Fichier mot de passe introuvable : $SecretFile" }
+    Write-Log "Fichiers verifies : executable et fichier mot de passe presents"
+
+    # Mot de passe chiffre -> texte en clair (en memoire uniquement)
+    $Passphrase = Get-Content $SecretFile | Select-Object -First 1 | ConvertTo-SecureString
+    $bstr       = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($Passphrase)
+    $plainText  = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($bstr)
+    Write-Log "Mot de passe dechiffre (non journalise)"
+
+    # Lancement DataStudio
+    $arguments = @(
+        "CONNECT=$Workspace"
+        "USER=$DsUser"
+        "PASSWORD=$plainText"
+        "CMDPROJECT=$ProjectName"
+    ) | ForEach-Object { Format-Arg $_ }
+
+    Write-Log "LANCEMENT DATASTUDIO : CONNECT=$Workspace USER=$DsUser PASSWORD=*** CMDPROJECT=$ProjectName"
+
+    $sw = [System.Diagnostics.Stopwatch]::StartNew()
+    # Pas de -Wait : il attendrait aussi le serveur DataStudio (process enfant)
+    $proc = Start-Process -FilePath $DsClientPath -ArgumentList ($arguments -join ' ') `
+                          -WorkingDirectory $DsPath -NoNewWindow -PassThru
+    $null = $proc.Handle    # necessaire pour lire ExitCode apres la fin
+    Write-Log "Client DataStudio demarre (PID $($proc.Id)), attente de sa fin"
+    $proc.WaitForExit()     # attend uniquement ce process
+    $sw.Stop()
+    $LaunchExitCode = $proc.ExitCode
+
+    Write-Log ("FIN DU TRAITEMENT DATASTUDIO - code retour : {0} - duree d'attente : {1:hh\:mm\:ss}" -f $LaunchExitCode, $sw.Elapsed)
+    if ($LaunchExitCode -ne 0) {
+        Write-Log "Erreur lors du lancement DataStudio. Code retour : $LaunchExitCode" "ERROR"
+        $Failed = $true
+    }
+}
+catch {
+    Write-Log "ERREUR : $($_.Exception.Message)" "ERROR"
+    $Failed = $true
+}
+finally {
+    # Arret du serveur DataStudio
+    if (Test-Path $DsClientPath) {
+        Write-Log "DEMANDE D'ARRET DU SERVEUR DATASTUDIO"
+        try {
+            $sw = [System.Diagnostics.Stopwatch]::StartNew()
+
+            $procClose = Start-Process -FilePath $DsClientPath -ArgumentList "-close CONNECT=$Workspace" `
+                                       -WorkingDirectory $DsPath -NoNewWindow -PassThru
+            $null = $procClose.Handle
+            if (-not $procClose.WaitForExit($CloseTimeoutSec * 1000)) {
+                Write-Log "Le client -close ne se termine pas : arret force" "ERROR"
+                $procClose.Kill()
+                $CloseExitCode = 1
+            }
+            else {
+                $CloseExitCode = $procClose.ExitCode
+            }
+
+            # Verification : le serveur doit etre arrete, sinon on le force
+            $srv = @(Get-DsServer)
+            if ($srv.Count -gt 0) {
+                Write-Log "$DsServerExe encore actif apres -close, attente max $ServerStopTimeoutSec s"
+                $srv | ForEach-Object { [void]$_.WaitForExit($ServerStopTimeoutSec * 1000) }
+
+                $srv = @(Get-DsServer)
+                if ($srv.Count -gt 0) {
+                    Write-Log "$DsServerExe toujours actif : arret force (PID $(($srv | ForEach-Object { $_.Id }) -join ','))" "ERROR"
+                    $srv | Stop-Process -Force
+                    $Failed = $true
+                }
+                else { Write-Log "$DsServerExe arrete proprement" }
+            }
+            else { Write-Log "$DsServerExe arrete proprement" }
+            $sw.Stop()
+
+            Write-Log ("SERVEUR ARRETE - code retour fermeture : {0} - duree : {1:hh\:mm\:ss}" -f $CloseExitCode, $sw.Elapsed)
+            if ($CloseExitCode -ne 0) {
+                Write-Log "Erreur lors de la fermeture DataStudio. Code retour : $CloseExitCode" "ERROR"
+                $Failed = $true
+            }
+        }
+        catch {
+            Write-Log "ERREUR FERMETURE DATASTUDIO : $($_.Exception.Message)" "ERROR"
+            $CloseExitCode = 1
+            $Failed = $true
+        }
+    }
+
+    # Nettoyage du mot de passe en memoire
+    if ($bstr -ne [IntPtr]::Zero) { [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr) }
+    $plainText  = $null
+    $Passphrase = $null
+    Write-Log "Mot de passe nettoye de la memoire"
+}
+
+$totalSw.Stop()
+$ExitCode = if ($Failed) { 1 } else { 0 }
+Write-Log ("FIN SCRIPT POWERSHELL - duree totale : {0:hh\:mm\:ss} - code retour : {1}" -f $totalSw.Elapsed, $ExitCode)
+
+# Le code retour remonte au .bat, puis à Control-M
+exit $ExitCode

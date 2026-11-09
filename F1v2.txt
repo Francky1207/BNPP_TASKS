@@ -1,0 +1,98 @@
+@ECHO OFF
+SETLOCAL
+
+REM ============================================================
+REM  RUN_IC_RUPIL2_ULTIME.BAT
+REM  Lance le traitement DataStudio via PowerShell et trace
+REM  l'execution dans un fichier de log (une log par execution).
+REM
+REM  Code retour : 0 = OK, autre valeur = erreur.
+REM ============================================================
+
+REM ------------------------------------------------------------
+REM  PARAMETRES A ADAPTER AU DEPLOIEMENT
+REM  (ne pas terminer les chemins par un "\")
+REM ------------------------------------------------------------
+
+REM -- Script PowerShell appele par ce .bat
+SET "PS1=D:\applis\Data\OSIATIS_RUN_IC\RUN_IC_RUPIL2_ULTIME.ps1"
+
+REM -- Installation DataStudio
+SET "DS_PATH=D:\applis\data\DataStudio40 Server"
+SET "DS_CLIENT_EXE=dtstud_c.exe"
+SET "DS_SERVER_EXE=datastudsrv.exe"
+
+REM -- Traitement a lancer
+SET "WORKSPACE=RUPIL2"
+SET "DS_USER=Admin"
+SET "PROJECT_NAME=Z_TEST_POWERSHELL"
+
+REM -- Fichier du mot de passe chiffre (lisible uniquement par le compte
+REM    Windows et sur la machine qui l'ont genere)
+SET "SECRET_FILE=E:\TRAITEMENT\RUPIL2\KELIA\TEST_20260917\TEST_CRYPTO_MDP\passphrase.dat"
+
+REM -- Logs de ce .bat et du .ps1 (distincts des logs DataStudio)
+SET "LOG_DIR=E:\TRAITEMENT\RUPIL2\LOGS_EXECUTION"
+SET "LOG_PREFIX=RUN_IC_RUPIL2_ULTIME"
+SET "LOG_RETENTION_DAYS=30"
+
+REM -- Delais maximum, en secondes
+SET "CLOSE_TIMEOUT_SEC=60"
+SET "SERVER_STOP_TIMEOUT_SEC=30"
+
+REM ------------------------------------------------------------
+REM  FIN DES PARAMETRES
+REM ------------------------------------------------------------
+
+REM Repertoire de log : creation si absent, repli sur %TEMP% en cas d'echec
+REM (un probleme de log ne doit jamais empecher le traitement)
+IF NOT EXIST "%LOG_DIR%" MKDIR "%LOG_DIR%" >NUL 2>&1
+IF NOT EXIST "%LOG_DIR%" SET "LOG_DIR=%TEMP%\LOGS_EXECUTION"
+IF NOT EXIST "%LOG_DIR%" MKDIR "%LOG_DIR%" >NUL 2>&1
+
+REM Horodatage independant de la langue de Windows
+FOR /F %%T IN ('powershell -NoProfile -Command "Get-Date -Format yyyyMMdd_HHmmss"') DO SET "STAMP=%%T"
+SET "LOG=%LOG_DIR%\%LOG_PREFIX%_%STAMP%.log"
+SET "ERRLOG=%LOG_DIR%\stderr_%STAMP%.tmp"
+
+REM Purge des anciennes logs
+FORFILES /P "%LOG_DIR%" /M "%LOG_PREFIX%_*.log" /D -%LOG_RETENTION_DAYS% /C "cmd /c del @path" >NUL 2>&1
+
+(ECHO %DATE% %TIME% [BAT] LANCEMENT %~nx0)>>"%LOG%"
+(ECHO %DATE% %TIME% [BAT] Fichier de log : %LOG%)>>"%LOG%"
+(ECHO %DATE% %TIME% [BAT] Workspace=%WORKSPACE% Projet=%PROJECT_NAME%)>>"%LOG%"
+(ECHO %DATE% %TIME% [BAT] APPEL DE POWERSHELL)>>"%LOG%"
+
+REM Les parametres sont transmis au .ps1 ; stderr va dans un fichier temporaire
+REM separe pour ne pas verrouiller la log pendant l'execution
+powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%PS1%" ^
+  -LogFile "%LOG%" ^
+  -DsPath "%DS_PATH%" ^
+  -DsClientExe "%DS_CLIENT_EXE%" ^
+  -DsServerExe "%DS_SERVER_EXE%" ^
+  -Workspace "%WORKSPACE%" ^
+  -DsUser "%DS_USER%" ^
+  -ProjectName "%PROJECT_NAME%" ^
+  -SecretFile "%SECRET_FILE%" ^
+  -CloseTimeoutSec %CLOSE_TIMEOUT_SEC% ^
+  -ServerStopTimeoutSec %SERVER_STOP_TIMEOUT_SEC% 2>"%ERRLOG%"
+SET RC=%ERRORLEVEL%
+
+REM Erreurs non gerees par le .ps1 : on les recopie dans la log
+IF EXIST "%ERRLOG%" (
+    FOR %%F IN ("%ERRLOG%") DO IF %%~zF GTR 0 (
+        (ECHO %DATE% %TIME% [BAT] ERREURS NON GEREES POWERSHELL :)>>"%LOG%"
+        TYPE "%ERRLOG%">>"%LOG%"
+    )
+    DEL "%ERRLOG%" >NUL 2>&1
+)
+
+(ECHO %DATE% %TIME% [BAT] FIN POWERSHELL - code retour : %RC%)>>"%LOG%"
+
+IF "%RC%"=="0" (
+    (ECHO %DATE% %TIME% [BAT] TERMINE AVEC SUCCES)>>"%LOG%"
+) ELSE (
+    (ECHO %DATE% %TIME% [BAT] TERMINE EN ERREUR - code %RC%)>>"%LOG%"
+)
+
+EXIT /B %RC%
