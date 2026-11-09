@@ -1,0 +1,35 @@
+@ECHO OFF
+SETLOCAL
+
+SET "BASE_DIR=D:\applis\Data\OSIATIS_RUN_IC"
+SET "PS1=%BASE_DIR%\RUN_IC_RUPIL2_NAPOLI__TEST.ps1"
+SET "LOG_DIR=%BASE_DIR%\LOGS"
+
+REM Creation du repertoire de logs si absent
+IF NOT EXIST "%LOG_DIR%" MKDIR "%LOG_DIR%"
+
+REM Horodatage independant de la langue Windows -> nom de log unique par execution
+FOR /F %%T IN ('powershell -NoProfile -Command "Get-Date -Format yyyyMMdd_HHmmss"') DO SET "STAMP=%%T"
+SET "LOG=%LOG_DIR%\RUN_IC_RUPIL2_NAPOLI__TEST_%STAMP%.log"
+
+REM Purge des logs de plus de 30 jours
+FORFILES /P "%LOG_DIR%" /M *.log /D -30 /C "cmd /c del @path" >NUL 2>&1
+
+(ECHO %DATE% %TIME% [BAT] LANCEMENT RUN_IC_RUPIL2_NAPOLI__TEST.BAT)>>"%LOG%"
+(ECHO %DATE% %TIME% [BAT] Fichier de log : %LOG%)>>"%LOG%"
+(ECHO %DATE% %TIME% [BAT] APPEL DE POWERSHELL)>>"%LOG%"
+
+REM Le .ps1 ecrit dans la meme log ; les erreurs non gerees (stderr) sont aussi capturees
+powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%PS1%" -LogFile "%LOG%" 2>>"%LOG%"
+SET RC=%ERRORLEVEL%
+
+(ECHO %DATE% %TIME% [BAT] FIN POWERSHELL - code retour : %RC%)>>"%LOG%"
+
+IF "%RC%"=="0" (
+    (ECHO %DATE% %TIME% [BAT] TERMINE AVEC SUCCES)>>"%LOG%"
+) ELSE (
+    (ECHO %DATE% %TIME% [BAT] TERMINE EN ERREUR - code %RC%)>>"%LOG%"
+)
+
+REM Code retour visible dans "Dernier resultat d'execution" du planificateur
+EXIT /B %RC%
